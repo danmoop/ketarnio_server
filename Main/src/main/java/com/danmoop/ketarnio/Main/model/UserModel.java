@@ -3,6 +3,8 @@ package com.danmoop.ketarnio.Main.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(value = "users")
 public class UserModel
 {
@@ -14,6 +16,7 @@ public class UserModel
     private String password;
     private String timeStamp;
     private String role;
+    private List<InboxMessage> messages;
 
     public UserModel() {}
 
@@ -40,6 +43,26 @@ public class UserModel
     public String getTimeStamp()
     {
         return timeStamp;
+    }
+
+    public List<InboxMessage> getMessages()
+    {
+        return messages;
+    }
+
+    public void setMessages(List<InboxMessage> messages)
+    {
+        this.messages = messages;
+    }
+
+    public void addInboxMessage(InboxMessage message)
+    {
+        messages.add(message);
+    }
+
+    public void removeMessage(InboxMessage message)
+    {
+        messages.remove(message);
     }
 
     public void setRole(String role)

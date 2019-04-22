@@ -19,13 +19,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     @Autowired
     private MongoUserDetailsService userDetailsService;
 
+    // String[] urls are addresses that will require user to authenticate
+    private String[] urls = {"/user", "/loginRequest"};
+
     @Override
     public void configure(HttpSecurity http) throws Exception
     {
         http.cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user", "/loginRequest").authenticated()
+                .antMatchers(urls).authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .httpBasic();
