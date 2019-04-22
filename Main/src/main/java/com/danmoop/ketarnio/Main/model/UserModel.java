@@ -1,16 +1,21 @@
 package com.danmoop.ketarnio.Main.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(value = "users")
-public class User
+public class UserModel
 {
+    @Id
+    private String id;
+
     private String username;
     private String email;
     private String password;
     private String timeStamp;
+    private String role;
 
-    public User() {}
+    public UserModel() {}
 
     public String getUsername()
     {
@@ -27,9 +32,24 @@ public class User
         return password;
     }
 
+    public String getRole()
+    {
+        return role;
+    }
+
     public String getTimeStamp()
     {
         return timeStamp;
+    }
+
+    public void setRole(String role)
+    {
+        this.role = role;
+    }
+
+    public boolean areFieldsEmpty()
+    {
+        return username.equals("") && email.equals("");
     }
 
     public void setUsername(String username)
@@ -54,7 +74,7 @@ public class User
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserModel{" +
                 "username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

@@ -4,15 +4,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
 @CrossOrigin
 @RestController
 public class IndexController
 {
-    @GetMapping("/getuuid")
-    public String uuid()
+    // we send a request from a frontend page check if the server is running
+    @GetMapping("/checkServer")
+    public String isRunning()
     {
-        return UUID.randomUUID().toString();
+        return "running";
     }
 }

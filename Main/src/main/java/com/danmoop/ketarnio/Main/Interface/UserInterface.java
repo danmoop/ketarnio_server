@@ -1,14 +1,14 @@
 package com.danmoop.ketarnio.Main.Interface;
 
-import com.danmoop.ketarnio.Main.model.User;
+import com.danmoop.ketarnio.Main.model.UserModel;
 
 import java.util.List;
 
 public interface UserInterface
 {
-    void save(User user);
-    User findByUsername(String username);
-    User findByEmail(String email);
+    void save(UserModel userModel);
+    UserModel findByUsername(String username);
+    UserModel findByEmail(String email);
 
-    List<User> findAll();
+    List<UserModel> findAll();
 }

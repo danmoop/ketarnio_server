@@ -2,7 +2,7 @@ package com.danmoop.ketarnio.Main.DAO;
 
 import com.danmoop.ketarnio.Main.Interface.UserInterface;
 import com.danmoop.ketarnio.Main.Service.UserService;
-import com.danmoop.ketarnio.Main.model.User;
+import com.danmoop.ketarnio.Main.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,25 +15,25 @@ public class UserDAO implements UserInterface
     private UserService userService;
 
     @Override
-    public void save(User user)
+    public void save(UserModel userModel)
     {
-        userService.save(user);
+        userService.save(userModel);
     }
 
     @Override
-    public User findByUsername(String username)
+    public UserModel findByUsername(String username)
     {
         return userService.findByUsername(username);
     }
 
     @Override
-    public User findByEmail(String email)
+    public UserModel findByEmail(String email)
     {
         return userService.findByEmail(email);
     }
 
     @Override
-    public List<User> findAll()
+    public List<UserModel> findAll()
     {
         return userService.findAll();
     }

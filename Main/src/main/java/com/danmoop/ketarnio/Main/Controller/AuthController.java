@@ -1,52 +1,66 @@
 package com.danmoop.ketarnio.Main.Controller;
 
 import com.danmoop.ketarnio.Main.DAO.UserDAO;
-import com.danmoop.ketarnio.Main.Service.UserService;
-import com.danmoop.ketarnio.Main.model.User;
+import com.danmoop.ketarnio.Main.model.UserModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 
 @CrossOrigin
 @RestController
 public class AuthController
 {
+    private ObjectMapper mapper = new ObjectMapper();
+
     @Autowired
     private UserDAO userDAO;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/signIn")
-    public User user(@RequestBody Object object) throws IOException
+    @GetMapping("/user")
+    public UserModel user(Principal principal)
     {
-        JSONObject jsonObject = Misc.getJSON(object);
+        return userDAO.findByUsername(principal.getName());
+    }
 
-        System.out.println(jsonObject);
+    @GetMapping("/loginRequest")
+    public UserModel login(Principal principal)
+    {
+        UserModel userModel = userDAO.findByUsername(principal.getName());
 
-        User user = mapper.readValue(jsonObject.toString(), User.class);
-
-        user.setTimeStamp(new Date().toString());
-        user.setEmail("none");
-
-        return user;
+        return userDAO.findByUsername(principal.getName());
     }
 
     @PostMapping("/signUp")
-    public String registration(@RequestBody User user) throws IOException
+    public boolean isRegistered(@RequestBody UserModel userModel)
     {
-        System.out.println(user.toString());
+        if(!userModel.areFieldsEmpty())
+        {
+            String userPass = userModel.getPassword();
 
-        user.setTimeStamp(new Date().toString());
+            userModel.setTimeStamp(new Date().toString());
+            userModel.setPassword(passwordEncoder.encode(userPass));
+            userModel.setRole("user");
+            userDAO.save(userModel);
 
-        userDAO.save(user);
+            return true;
+        }
 
-        return "success";
+        return false;
+    }
+
+    @GetMapping("/you_logged_out")
+    public String loggedOut()
+    {
+        return "You Logged Out!";
     }
 }

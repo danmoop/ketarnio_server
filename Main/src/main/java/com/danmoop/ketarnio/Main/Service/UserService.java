@@ -1,14 +1,14 @@
 package com.danmoop.ketarnio.Main.Service;
 
-import com.danmoop.ketarnio.Main.model.User;
+import com.danmoop.ketarnio.Main.model.UserModel;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface UserService extends MongoRepository<User, String>
+public interface UserService extends MongoRepository<UserModel, String>
 {
-    User findByUsername(String username);
-    User findByEmail(String email);
+    UserModel findByUsername(String username);
+    UserModel findByEmail(String email);
 
-    List<User> findAll();
+    List<UserModel> findAll();
 }
