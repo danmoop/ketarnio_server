@@ -16,7 +16,10 @@ public class UserModel
     private String password;
     private String timeStamp;
     private String role;
+    private String note;
     private List<InboxMessage> messages;
+    private List<Task> tasks;
+    private List<Project> projects;
 
     public UserModel() {}
 
@@ -63,6 +66,32 @@ public class UserModel
     public void removeMessage(InboxMessage message)
     {
         messages.remove(message);
+    }
+
+    public String getNote()
+    {
+        return note;
+    }
+
+    public void setNote(String note)
+    {
+        this.note = note;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 
     public void setRole(String role)

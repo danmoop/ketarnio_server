@@ -42,12 +42,15 @@ public class AuthController
     {
         if(!userModel.areFieldsEmpty())
         {
-            String userPass = userModel.getPassword();
+            userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
 
             userModel.setTimeStamp(new Date().toString());
-            userModel.setPassword(passwordEncoder.encode(userPass));
             userModel.setRole("user");
+            userModel.setNote("");
             userModel.setMessages(new ArrayList<>());
+            userModel.setTasks(new ArrayList<>());
+            userModel.setProjects(new ArrayList<>());
+
             userDAO.save(userModel);
 
             return true;
