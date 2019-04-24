@@ -4,10 +4,7 @@ import com.danmoop.ketarnio.Main.DAO.UserDAO;
 import com.danmoop.ketarnio.Main.model.UserModel;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -26,5 +23,11 @@ public class UserDashboardController
         UserModel user = userDAO.findByUsername(principal.getName());
         user.setNote(object.get("text").toString());
         userDAO.save(user);
+    }
+
+    @GetMapping("/refreshUserProfile")
+    public UserModel user(Principal principal)
+    {
+        return userDAO.findByUsername(principal.getName());
     }
 }

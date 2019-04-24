@@ -19,7 +19,7 @@ public class UserModel
     private String note;
     private List<InboxMessage> messages;
     private List<Task> tasks;
-    private List<Project> projects;
+    private List<String> projects;
 
     public UserModel() {}
 
@@ -78,20 +78,29 @@ public class UserModel
         this.note = note;
     }
 
-    public List<Task> getTasks() {
+    public List<Task> getTasks()
+    {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<Task> tasks)
+    {
         this.tasks = tasks;
     }
 
-    public List<Project> getProjects() {
+    public List<String> getProjects()
+    {
         return projects;
     }
 
-    public void setProjects(List<Project> projects) {
+    public void setProjects(List<String> projects)
+    {
         this.projects = projects;
+    }
+
+    public void addProject(String project)
+    {
+        projects.add(project);
     }
 
     public void setRole(String role)

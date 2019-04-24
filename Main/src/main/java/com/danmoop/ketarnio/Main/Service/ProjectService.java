@@ -8,5 +8,6 @@ import java.util.List;
 public interface ProjectService extends MongoRepository<Project, String>
 {
     Project findByProjectName(String projectName);
+    Project findByCreatorName(String creatorName);
     List<Project> findAll();
 }

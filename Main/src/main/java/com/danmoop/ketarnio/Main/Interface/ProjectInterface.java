@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface ProjectInterface
 {
+    void save(Project project);
     List<Project> findAll();
     Project findByProjectName(String projectName);
+    Project findByCreatorName(String creatorName);
 }

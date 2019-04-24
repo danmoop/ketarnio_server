@@ -1,7 +1,10 @@
 package com.danmoop.ketarnio.Main.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 
+@Document(value = "projects")
 public class Project
 {
     private String projectName;
@@ -9,7 +12,13 @@ public class Project
     private List<String> members;
     private List<String> admins;
 
-    public Project() {}
+    public Project(String projectName, String creatorName, List<String> members, List<String> admins)
+    {
+        this.projectName = projectName;
+        this.creatorName = creatorName;
+        this.members = members;
+        this.admins = admins;
+    }
 
     public String getProjectName()
     {

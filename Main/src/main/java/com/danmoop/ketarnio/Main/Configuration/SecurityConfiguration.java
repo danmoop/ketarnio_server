@@ -20,7 +20,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     private MongoUserDetailsService userDetailsService;
 
     // String[] urls are addresses that will require user to authenticate
-    private String[] urls = {"/user", "/loginRequest", "/setUserNote"};
+    private String[] urls = {
+            "/user", "/loginRequest", "/setUserNote", "/refreshUserProfile", "/createProject"
+    };
 
     @Override
     public void configure(HttpSecurity http) throws Exception
