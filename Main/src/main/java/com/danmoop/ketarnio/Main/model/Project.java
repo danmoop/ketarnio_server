@@ -1,5 +1,6 @@
 package com.danmoop.ketarnio.Main.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -8,6 +9,9 @@ import java.util.List;
 @Document(value = "projects")
 public class Project
 {
+    @Id
+    private String id;
+
     private String projectName;
     private String creatorName;
     private int budget;
