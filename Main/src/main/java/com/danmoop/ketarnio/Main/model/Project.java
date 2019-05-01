@@ -14,7 +14,7 @@ public class Project
 
     private String projectName;
     private String creatorName;
-    private int budget;
+    private long budget;
     private List<String> members;
     private List<String> admins;
     private ProjectNotification projectNotification;
@@ -22,7 +22,7 @@ public class Project
     private List<Task> completedTasks;
     private List<InboxMessage> messages;
 
-    public Project(String projectName, String creatorName, List<String> members, List<String> admins, int budget)
+    public Project(String projectName, String creatorName, List<String> members, List<String> admins, long budget)
     {
         this.projectName = projectName;
         this.creatorName = creatorName;
@@ -62,12 +62,12 @@ public class Project
         return members;
     }
 
-    public int getBudget()
+    public long getBudget()
     {
         return budget;
     }
 
-    public void setBudget(int budget)
+    public void setBudget(long budget)
     {
         this.budget = budget;
     }
@@ -125,5 +125,15 @@ public class Project
     public void setMessages(List<InboxMessage> messages)
     {
         this.messages = messages;
+    }
+
+    public void addMessage(InboxMessage message)
+    {
+        messages.add(message);
+    }
+
+    public void clearInbox()
+    {
+        messages.clear();
     }
 }

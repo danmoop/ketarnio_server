@@ -2,6 +2,7 @@ package com.danmoop.ketarnio.Main.Controller;
 
 import com.danmoop.ketarnio.Main.DAO.ProjectDAO;
 import com.danmoop.ketarnio.Main.DAO.UserDAO;
+import com.danmoop.ketarnio.Main.model.InboxMessage;
 import com.danmoop.ketarnio.Main.model.Project;
 import com.danmoop.ketarnio.Main.model.ProjectNotification;
 import com.danmoop.ketarnio.Main.model.UserModel;
@@ -88,5 +89,62 @@ public class ProjectController
             project.setProjectNotification(null);
             projectDAO.save(project);
         }
+    }
+
+    @PostMapping("/setProjectBudget")
+    public Project projectWithNewBudget(Principal principal, @RequestBody Object object)
+    {
+        String projectName = Misc.getJSON(object).get("projectName").toString();
+        long budget = Long.parseLong(Misc.getJSON(object).get("budget").toString());
+        String reasonOfChange = Misc.getJSON(object).get("reasonOfChange").toString();
+
+        Project project = projectDAO.findByProjectName(projectName);
+
+        if(project != null && project.getAdmins().contains(principal.getName()))
+        {
+            InboxMessage inboxMessage = new InboxMessage(
+                    principal.getName(), // message author
+                    principal.getName() + " has set a new project budget.\nReason of change: " + reasonOfChange + "\nTotal: " + budgetDifference(project.getBudget(), budget), // message content
+                    new Date().toString() // when was message created
+            );
+
+            project.addMessage(inboxMessage);
+            project.setBudget(budget);
+
+            projectDAO.save(project);
+        }
+
+        return project; // a modified project sent back to user and replaced instead of the old one
+    }
+
+    @PostMapping("/deleteAllInboxMessages")
+    public Project project(Principal principal, @RequestBody Object object)
+    {
+        Project project = projectDAO.findByProjectName(Misc.getJSON(object).get("projectName").toString());
+
+        if(project.getAdmins().contains(principal.getName()))
+        {
+            project.clearInbox();
+
+            project.addMessage(new InboxMessage(
+                    principal.getName(),
+                    principal.getName() + " has cleared project inbox",
+                    new Date().toString()
+            ));
+
+            projectDAO.save(project);
+        }
+
+        return project;
+    }
+
+    private String budgetDifference(long oldBudget, long newBudget)
+    {
+        long difference = newBudget - oldBudget;
+
+        if(difference > 0)
+            return "+" + difference;
+        else
+            return String.valueOf(difference);
     }
 }

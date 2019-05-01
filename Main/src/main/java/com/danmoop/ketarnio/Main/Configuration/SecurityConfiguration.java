@@ -21,7 +21,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 
     // String[] urls are addresses that will require user to authenticate
     private String[] urls = {
-            "/user", "/loginRequest", "/setUserNote", "/refreshUserProfile", "/createProject"
+            "/user", "/loginRequest", "/setUserNote", "/refreshUserProfile", "/createProject",
+            "/removeProjectNotification", "/setProjectNotification", "/getProject", "/setProjectBudget",
+            "/deleteAllInboxMessages"
     };
 
     @Override
