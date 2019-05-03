@@ -23,9 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     private String[] urls = {
             "/user", "/loginRequest", "/setUserNote", "/refreshUserProfile", "/createProject",
             "/removeProjectNotification", "/setProjectNotification", "/getProject", "/setProjectBudget",
-            "/deleteAllInboxMessages"
+            "/deleteAllInboxMessages", "/clearUserInbox", "/sendMessageToUser"
     };
-
     @Override
     public void configure(HttpSecurity http) throws Exception
     {

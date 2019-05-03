@@ -133,6 +133,11 @@ public class UserModel
         this.timeStamp = timeStamp;
     }
 
+    public void clearInbox()
+    {
+        messages.clear();
+    }
+
     @Override
     public String toString() {
         return "UserModel{" +

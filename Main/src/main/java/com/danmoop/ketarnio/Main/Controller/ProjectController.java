@@ -143,8 +143,26 @@ public class ProjectController
         long difference = newBudget - oldBudget;
 
         if(difference > 0)
-            return "+" + difference;
+            return "+" + formatFunds(String.valueOf(difference));
         else
-            return String.valueOf(difference);
+            return formatFunds(String.valueOf(difference));
+    }
+
+    private String formatFunds(String str)
+    {
+        // took this function from my previous project
+        // https://github.com/danmoop/JMoney/blob/master/src/money/Currency.java#L54
+
+        StringBuffer st = new StringBuffer(str);
+
+        for(int i = str.length(); i > 0; i--)
+        {
+            if((str.length() - i) % 3 == 0)
+            {
+                st.insert(i, ",");
+            }
+        }
+
+        return st.substring(0, st.length() - 1);
     }
 }
