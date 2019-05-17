@@ -2,10 +2,7 @@ package com.danmoop.ketarnio.Main.Controller;
 
 import com.danmoop.ketarnio.Main.DAO.ProjectDAO;
 import com.danmoop.ketarnio.Main.DAO.UserDAO;
-import com.danmoop.ketarnio.Main.model.InboxMessage;
-import com.danmoop.ketarnio.Main.model.Project;
-import com.danmoop.ketarnio.Main.model.ProjectNotification;
-import com.danmoop.ketarnio.Main.model.UserModel;
+import com.danmoop.ketarnio.Main.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -138,6 +135,25 @@ public class ProjectController
         return project;
     }
 
+    @PostMapping("/inviteUserToProject/{projectName}/{userName}")
+    public String inviteUserToProject(Principal principal, @PathVariable String projectName, @PathVariable String userName)
+    {
+        UserModel user = userDAO.findByUsername(userName); // find this user in db
+
+        Project project = projectDAO.findByProjectName(projectName);
+
+        if(user != null && project != null && project.getAdmins().contains(principal.getName()))
+        {
+            ProjectInvitation invitation = new ProjectInvitation(projectName, principal.getName(), new Date().toString());
+            user.addProjectInvitation(invitation); // add an invite
+            userDAO.save(user);
+
+            return "Done!";
+        }
+
+        return userName + " is not found";
+    }
+
     private String budgetDifference(long oldBudget, long newBudget)
     {
         long difference = newBudget - oldBudget;
@@ -145,7 +161,10 @@ public class ProjectController
         if(difference > 0)
             return "+" + formatFunds(String.valueOf(difference));
         else
-            return formatFunds(String.valueOf(difference));
+        {
+            String str = String.valueOf(difference);
+            return "-" + formatFunds(str.substring(1));
+        }
     }
 
     private String formatFunds(String str)

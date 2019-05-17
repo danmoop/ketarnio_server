@@ -18,6 +18,7 @@ public class UserModel
     private String role;
     private String note;
     private List<InboxMessage> messages;
+    private List<ProjectInvitation> projectInvitations;
     private List<Task> tasks;
     private List<String> projects;
 
@@ -46,6 +47,20 @@ public class UserModel
     public String getTimeStamp()
     {
         return timeStamp;
+    }
+
+    public List<ProjectInvitation> getProjectInvitations()
+    {
+        return projectInvitations;
+    }
+
+    public void setProjectInvitations(List<ProjectInvitation> projectInvitations) {
+        this.projectInvitations = projectInvitations;
+    }
+
+    public void addProjectInvitation(ProjectInvitation invitation)
+    {
+        projectInvitations.add(invitation);
     }
 
     public List<InboxMessage> getMessages()

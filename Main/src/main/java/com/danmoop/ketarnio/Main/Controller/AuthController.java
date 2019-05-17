@@ -42,14 +42,17 @@ public class AuthController
     {
         if(!userModel.areFieldsEmpty())
         {
+            // password is set by a user
             userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
 
+            // all other data is set automatically by server
             userModel.setTimeStamp(new Date().toString());
             userModel.setRole("user");
             userModel.setNote("");
             userModel.setMessages(new ArrayList<>());
             userModel.setTasks(new ArrayList<>());
             userModel.setProjects(new ArrayList<>());
+            userModel.setProjectInvitations(new ArrayList<>());
 
             userDAO.save(userModel);
 

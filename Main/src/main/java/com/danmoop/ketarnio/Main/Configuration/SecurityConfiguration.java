@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -23,8 +22,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     private String[] urls = {
             "/user", "/loginRequest", "/setUserNote", "/refreshUserProfile", "/createProject",
             "/removeProjectNotification", "/setProjectNotification", "/getProject", "/setProjectBudget",
-            "/deleteAllInboxMessages", "/clearUserInbox", "/sendMessageToUser"
+            "/deleteAllInboxMessages", "/clearUserInbox", "/sendMessageToUser", "/inviteUserToProject"
     };
+
     @Override
     public void configure(HttpSecurity http) throws Exception
     {
@@ -32,7 +32,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(urls).authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .httpBasic();
     }
